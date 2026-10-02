@@ -9,6 +9,6 @@
     "deploy": "npm run build"
   },
   "dependencies": {
-    "astro": "^5.13.0"
+    "astro": "^7.3.5"
   }
 }

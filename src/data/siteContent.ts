@@ -25,8 +25,10 @@ export const defaultSiteContent = {
       text: "Acompañamos a nuestros estudiantes en su crecimiento académico, humano y espiritual."
     },
     {
-      image: withBase("/images/logo.png"),
-
+      image: withBase("/images/basica.jpg"),
+      eyebrow: "FORMACIÓN INTEGRAL",
+      title: "Valores para crecer, aprender y servir",
+      text: "Construimos aprendizajes y experiencias que impulsan el desarrollo de cada estudiante."
     }
   ],
   newsItems: [

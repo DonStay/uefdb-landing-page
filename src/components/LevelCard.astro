@@ -1,0 +1,25 @@
+---
+const { title, text, number, href, image, imageKey, videoUrl } = Astro.props;
+---
+<article class="program-card">
+	<div class={videoUrl ? "program-image-slot program-video-slot" : "program-image-slot"}>
+		{videoUrl ? (
+			<iframe
+				title={`Video de ${title}`}
+				src={`https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(videoUrl)}&show_text=false&width=960`}
+				loading="lazy"
+				allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+				allowfullscreen
+			></iframe>
+		) : (
+			<>
+				<span>Espacio para imagen de {title}</span>
+				<img src={image} data-image-key={imageKey} alt={`Imagen de ${title}`} />
+			</>
+		)}
+	</div>
+	<span class="program-number">{number}</span>
+	<h2>{title}</h2>
+	<p>{text}</p>
+	<a href={href}>Conocer el nivel →</a>
+</article>

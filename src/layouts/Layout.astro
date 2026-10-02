@@ -19,10 +19,12 @@ const defaultContent = JSON.stringify(defaultSiteContent);
   </head>
   <body>
     <slot />
-    <script is:inline data-default-content={defaultContent}>
+    <script is:inline data-default-content={defaultContent} data-base-url={import.meta.env.BASE_URL}>
       (() => {
         const storageKey = "don-bosco-content-v1";
         const defaults = JSON.parse(document.currentScript.dataset.defaultContent || "{}");
+        const baseUrl = document.currentScript.dataset.baseUrl || "/";
+        const withBase = (path) => path.startsWith(baseUrl) ? path : `${baseUrl}${path.replace(/^\/+/, "")}`;
 
         const getContent = () => {
           try {
@@ -45,7 +47,7 @@ const defaultContent = JSON.stringify(defaultSiteContent);
           if (!keyPath) return;
           const value = keyPath.split(".").reduce((obj, key) => obj?.[key], content);
           if (value && element.tagName === "IMG") {
-            const imagePath = /^(https?:)?\/\//i.test(value) || value.startsWith("/") ? value : `/images/${value}`;
+            const imagePath = /^(https?:)?\/\//i.test(value) ? value : withBase(value.startsWith("/") ? value : `/images/${value}`);
             const fallbackValue = keyPath.split(".").reduce((obj, key) => obj?.[key], defaults);
             if (fallbackValue && imagePath !== fallbackValue) {
               element.addEventListener("error", () => {

@@ -1,0 +1,39 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import ContactForm from "../components/ContactForm.astro";
+---
+<Layout title="Contacto | Don Bosco de Esmeraldas">
+	<Header />
+	<main>
+		<section class="page-hero">
+			<div class="container">
+				<p class="eyebrow">CONTACTO</p>
+				<h1>Estamos para escucharte</h1>
+				<p>Completa el formulario para ponerte en contacto con nosotros.</p>
+			</div>
+		</section>
+		<section class="contact-grid container">
+			<div class="contact-info">
+				<h2>Información</h2>
+				<p><strong>Dirección:</strong> Eugenio Espejo, Esmeraldas, Ecuador</p>
+				<p><strong>Correo:</strong> correo@donbosco.edu.ec</p>
+				<p><strong>Teléfonos:</strong> (06) 272-3123 / (06) 272-4688</p>
+				<div class="map-placeholder">
+					<iframe
+						title="Ubicación de la Unidad Educativa Fiscomisional Don Bosco"
+						src="https://www.google.com/maps?q=0.9700175,-79.6574557&z=17&output=embed"
+						loading="lazy"
+						referrerpolicy="no-referrer-when-downgrade"
+					></iframe>
+				</div>
+				<a class="maps-link" href="https://maps.app.goo.gl/X2sxcZtTFznfZux49" target="_blank" rel="noopener noreferrer">
+					Abrir ubicación en Google Maps
+				</a>
+			</div>
+			<ContactForm />
+		</section>
+	</main>
+	<Footer />
+</Layout>

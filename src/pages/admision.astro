@@ -1,0 +1,40 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const base = import.meta.env.BASE_URL;
+---
+<Layout title="Admisión | Don Bosco de Esmeraldas">
+	<Header />
+	<main>
+		<section class="page-hero">
+			<div class="container">
+				<p class="eyebrow">ADMISIÓN</p>
+				<h1>Da el siguiente paso</h1>
+				<p>Consulta directamente con la institución la disponibilidad, los requisitos y el calendario vigentes.</p>
+			</div>
+		</section>
+		<section class="cards-grid program-grid container">
+			<article class="program-card">
+				<span class="program-number">01</span>
+				<h2>Consulta disponibilidad</h2>
+				<p>Indica el nivel educativo de interés y pregunta por los cupos disponibles.</p>
+			</article>
+			<article class="program-card">
+				<span class="program-number">02</span>
+				<h2>Verifica los requisitos</h2>
+				<p>El personal de la institución te confirmará qué documentos se necesitan para el nivel correspondiente.</p>
+			</article>
+			<article class="program-card">
+				<span class="program-number">03</span>
+				<h2>Confirma el proceso</h2>
+				<p>Solicita las fechas y las instrucciones actuales para completar la matrícula.</p>
+			</article>
+		</section>
+		<section class="container" style="padding-bottom: 48px; text-align: center;">
+			<a class="btn btn-primary" href={`${base}contacto/`}>Contactar a la institución →</a>
+		</section>
+	</main>
+	<Footer />
+</Layout>

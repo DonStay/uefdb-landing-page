@@ -12,7 +12,9 @@ const navItems = [
   { label: "Galería", href: `${base}galeria/` },
   { label: "Contacto", href: `${base}contacto/` }
 ];
-const current = Astro.url.pathname;
+const current = Astro.url.pathname.startsWith(base)
+  ? Astro.url.pathname
+  : `${base}${Astro.url.pathname.replace(/^\/+/, "")}`;
 ---
 <header class="site-header">
   <a class="brand" href={base} aria-label="Inicio">
@@ -29,7 +31,7 @@ const current = Astro.url.pathname;
 
   <nav class="main-nav" data-menu>
     {navItems.map((item) => (
-      <a class:list={{ active: current === item.href || (item.href !== "/" && current.startsWith(item.href)) }} href={item.href}>
+      <a class:list={{ active: current === item.href || (item.href !== base && current.startsWith(item.href)) }} href={item.href}>
         {item.label}
       </a>
     ))}

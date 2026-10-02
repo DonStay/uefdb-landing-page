@@ -13,7 +13,7 @@ const stillPhotos = photos.filter((photo) => !photo.videoUrl);
   <main>
     <section class="page-hero"><div class="container"><p class="eyebrow">GALERÍA</p><h1>Así vivimos Don Bosco</h1></div></section>
     <section class="gallery container">
-      {video && (
+      {video?.videoUrl && (
         <article class="gallery-item gallery-video">
           <iframe
             title={video.title}
@@ -41,12 +41,14 @@ const stillPhotos = photos.filter((photo) => !photo.videoUrl);
   </div>
   <Footer />
   <script>
-    const modal = document.querySelector("[data-gallery-modal]");
-    const image = document.querySelector("[data-gallery-image]");
-    const title = modal?.querySelector("[data-gallery-title]");
-    document.querySelectorAll("[data-gallery-src]").forEach((button) => {
+    const modal = document.querySelector<HTMLElement>("[data-gallery-modal]");
+    const image = document.querySelector<HTMLImageElement>("[data-gallery-image]");
+    const title = modal?.querySelector<HTMLElement>("[data-gallery-title]");
+    document.querySelectorAll<HTMLButtonElement>("[data-gallery-src]").forEach((button) => {
       button.addEventListener("click", () => {
-        image.src = button.dataset.gallerySrc;
+        const imageSource = button.dataset.gallerySrc;
+        if (!image || !title || !imageSource) return;
+        image.src = imageSource;
         title.textContent = button.dataset.galleryTitle || "";
         modal?.classList.add("is-open");
         modal?.setAttribute("aria-hidden", "false");

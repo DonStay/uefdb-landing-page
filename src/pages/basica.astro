@@ -1,0 +1,16 @@
+---
+import EducationPage from "../components/EducationPage.astro";
+import { defaultSiteContent } from "../data/siteContent";
+---
+<EducationPage
+	title="Educación General Básica"
+	introduction="Conocimientos y valores para descubrir nuevas posibilidades."
+	description="La formación básica fortalece las herramientas para comprender el entorno, comunicar ideas y aprender con responsabilidad junto a la comunidad."
+	image={defaultSiteContent.programImages[1]}
+	imageKey="programImages.1"
+	points={[
+		"Lectura, comunicación y pensamiento matemático.",
+		"Curiosidad, creatividad y resolución de problemas.",
+		"Respeto, colaboración y compromiso con los demás."
+	]}
+/>

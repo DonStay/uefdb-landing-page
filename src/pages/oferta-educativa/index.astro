@@ -2,13 +2,15 @@
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
+import LevelCard from "../../components/LevelCard.astro";
+import { defaultSiteContent } from "../../data/siteContent";
 
 const base = import.meta.env.BASE_URL || "/";
 const levels = [
-  ["Educación Inicial", "Acompañamiento y aprendizaje mediante experiencias significativas.", "01"],
-  ["Educación General Básica", "Desarrollo de conocimientos, habilidades y valores para cada etapa.", "02"],
-  ["Bachillerato", "Preparación académica y humana para estudios superiores y el mundo laboral.", "03"],
-  ["Bachillerato Técnico", "Formación técnica orientada a proyectos, tecnología y emprendimiento.", "04"]
+  { title: "Educación Inicial", text: "Acompañamiento y aprendizaje mediante experiencias significativas.", number: "01", href: `${base}inicial/`, image: defaultSiteContent.programImages[0], imageKey: "programImages.0" },
+  { title: "Educación General Básica", text: "Desarrollo de conocimientos, habilidades y valores para cada etapa.", number: "02", href: `${base}basica/`, image: defaultSiteContent.programImages[1], imageKey: "programImages.1" },
+  { title: "Bachillerato", text: "Preparación académica y humana para estudios superiores y el mundo laboral.", number: "03", href: `${base}bachillerato/`, image: defaultSiteContent.programImages[2], imageKey: "programImages.2" },
+  { title: "Bachillerato Técnico", text: "Formación técnica orientada a proyectos, tecnología y emprendimiento.", number: "04", href: `${base}tecnico/`, videoUrl: "https://www.facebook.com/reel/872740409043042/" }
 ];
 ---
 <Layout title="Oferta Educativa | Don Bosco de Esmeraldas">
@@ -16,30 +18,10 @@ const levels = [
   <main>
     <section class="page-hero"><div class="container"><p class="eyebrow">OFERTA EDUCATIVA</p><h1>Aprender para transformar</h1><p>“Todo lo que hagan, háganlo de corazón, como para el Señor.”<span class="verse-reference">Colosenses 3:23</span></p></div></section>
     <section class="cards-grid program-grid container">
-      {levels.map(([title, text, number], index) => (
-        <article class="program-card">
-          <div class={index === 3 ? "program-image-slot program-video-slot" : "program-image-slot"}>
-            {index === 3 ? (
-              <iframe
-                title="Video de Bachillerato Técnico"
-                src={`https://www.facebook.com/plugins/video.php?href=${encodeURIComponent("https://www.facebook.com/reel/872740409043042/")}&show_text=false&width=960`}
-                loading="lazy"
-                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                allowfullscreen
-              ></iframe>
-            ) : (
-              <>
-                <span>Espacio para imagen de {title}</span>
-                <img data-image-key={`programImages.${index}`} alt={`Imagen de ${title}`} />
-              </>
-            )}
-          </div>
-          <span class="program-number">{number}</span>
-          <h2>{title}</h2>
-          <p>{text}</p>
-          <a href={`${base}contacto/`}>Solicitar información →</a>
-        </article>
-      ))}
+      {levels.map((level) => <LevelCard {...level} />)}
+    </section>
+    <section class="container" style="padding-bottom: 48px; text-align: center;">
+      <a class="btn btn-primary" href={`${base}admision/`}>Conocer el proceso de admisión →</a>
     </section>
   </main>
   <Footer />
