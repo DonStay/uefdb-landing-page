@@ -1,20 +1,21 @@
 ---
 import { siteLogo } from "../data/siteContent";
 
+const base = import.meta.env.BASE_URL || "/";
 const navItems = [
-  { label: "Inicio", href: "/" },
-  { label: "Institución", href: "/institucion/" },
-  { label: "Autoridades", href: "/autoridades/" },
-  { label: "Oferta Educativa", href: "/oferta-educativa/" },
-  { label: "Cuadro de Honor", href: "/cuadro-de-honor/" },
-  { label: "Noticias", href: "/noticias/" },
-  { label: "Galería", href: "/galeria/" },
-  { label: "Contacto", href: "/contacto/" }
+  { label: "Inicio", href: base },
+  { label: "Institución", href: `${base}institucion/` },
+  { label: "Autoridades", href: `${base}autoridades/` },
+  { label: "Oferta Educativa", href: `${base}oferta-educativa/` },
+  { label: "Cuadro de Honor", href: `${base}cuadro-de-honor/` },
+  { label: "Noticias", href: `${base}noticias/` },
+  { label: "Galería", href: `${base}galeria/` },
+  { label: "Contacto", href: `${base}contacto/` }
 ];
 const current = Astro.url.pathname;
 ---
 <header class="site-header">
-  <a class="brand" href="/" aria-label="Inicio">
+  <a class="brand" href={base} aria-label="Inicio">
     <img src={siteLogo} alt="Logo Don Bosco" data-image-key="siteLogo" />
     <span>
       <small>UNIDAD EDUCATIVA</small>

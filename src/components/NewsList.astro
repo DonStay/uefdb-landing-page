@@ -1,11 +1,12 @@
 ---
 import { newsItems } from "../data/siteContent";
 
+const base = import.meta.env.BASE_URL || "/";
 const news = newsItems;
 ---
 <div class="news-list">
   {news.map((item, index) => (
-    <a class="news-item" href="/noticias/" data-news-index={index}>
+    <a class="news-item" href={`${base}noticias/`} data-news-index={index}>
       <img src={item.image} alt="" />
       <div>
         <small>{item.date}</small>

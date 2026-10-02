@@ -1,15 +1,18 @@
+---
+const base = import.meta.env.BASE_URL || "/";
+---
 <footer class="footer">
   <div class="footer-inner">
     <div>
-      <img src="/images/DBLOGO.png" alt="Don Bosco" class="footer-logo" />
+      <img src={`${base}images/DBLOGO.png`} alt="Don Bosco" class="footer-logo" />
       <p>Formamos jóvenes con valores, conocimiento y compromiso para construir un mejor futuro.</p>
     </div>
     <div>
       <h3>Enlaces</h3>
-      <a href="/institucion/">Nuestra institución</a>
-      <a href="/oferta-educativa/">Oferta educativa</a>
-      <a href="/noticias/">Noticias</a>
-      <a href="/contacto/">Contacto</a>
+      <a href={`${base}institucion/`}>Nuestra institución</a>
+      <a href={`${base}oferta-educativa/`}>Oferta educativa</a>
+      <a href={`${base}noticias/`}>Noticias</a>
+      <a href={`${base}contacto/`}>Contacto</a>
     </div>
     <div>
       <h3>Contacto y redes</h3>

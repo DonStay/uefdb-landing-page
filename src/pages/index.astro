@@ -6,6 +6,8 @@ import QuickLinks from "../components/QuickLinks.astro";
 import NewsList from "../components/NewsList.astro";
 import Footer from "../components/Footer.astro";
 import { aboutImage } from "../data/siteContent";
+
+const base = import.meta.env.BASE_URL || "/";
 ---
 <Layout title="Inicio | Don Bosco de Esmeraldas">
   <Header />
@@ -21,7 +23,7 @@ import { aboutImage } from "../data/siteContent";
         <p class="eyebrow">SOBRE NOSOTROS</p>
         <h2>Una educación con sentido y un futuro sin límites</h2>
         <p>En la Unidad Educativa Fiscomisional Don Bosco de Esmeraldas creemos en el poder de la educación para transformar vidas. Nuestro compromiso es formar integralmente a cada estudiante, acompañándolo en su crecimiento académico, humano y espiritual.</p>
-        <a class="btn btn-primary" href="/institucion/">Conoce más sobre nosotros →</a>
+        <a class="btn btn-primary" href={`${base}institucion/`}>Conoce más sobre nosotros →</a>
         <div class="values">
           <span>♡ Valores</span><span>▣ Formación</span><span>♙ Compromiso</span><span>☆ Excelencia</span>
         </div>
@@ -29,7 +31,7 @@ import { aboutImage } from "../data/siteContent";
       <aside class="latest-news">
         <div class="section-title">
           <p class="eyebrow">ÚLTIMAS NOTICIAS</p>
-          <a href="/noticias/">Ver todas →</a>
+          <a href={`${base}noticias/`}>Ver todas →</a>
         </div>
         <NewsList />
       </aside>

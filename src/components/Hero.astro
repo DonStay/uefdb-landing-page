@@ -1,6 +1,7 @@
 ---
 import { heroSlides } from "../data/siteContent";
 
+const base = import.meta.env.BASE_URL || "/";
 const slides = heroSlides;
 ---
 <section class="hero" data-carousel>
@@ -14,7 +15,7 @@ const slides = heroSlides;
         <p class="hero-text">{slide.text}</p>
       </div>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="/institucion/">Conoce nuestra institución →</a>
+        <a class="btn btn-primary" href={`${base}institucion/`}>Conoce nuestra institución →</a>
         <button class="btn btn-light" data-scroll="#sobre-nosotros">◉ &nbsp; Ver más</button>
       </div>
     </article>

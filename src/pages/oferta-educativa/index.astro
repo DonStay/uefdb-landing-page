@@ -2,6 +2,8 @@
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
+
+const base = import.meta.env.BASE_URL || "/";
 const levels = [
   ["Educación Inicial", "Acompañamiento y aprendizaje mediante experiencias significativas.", "01"],
   ["Educación General Básica", "Desarrollo de conocimientos, habilidades y valores para cada etapa.", "02"],
@@ -35,7 +37,7 @@ const levels = [
           <span class="program-number">{number}</span>
           <h2>{title}</h2>
           <p>{text}</p>
-          <a href="/contacto/">Solicitar información →</a>
+          <a href={`${base}contacto/`}>Solicitar información →</a>
         </article>
       ))}
     </section>
