@@ -1,0 +1,34 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { aboutImage } from "../../data/siteContent";
+---
+<Layout title="Institución | Don Bosco de Esmeraldas">
+  <Header />
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow">INSTITUCIÓN</p>
+        <h1>Una educación con sentido</h1>
+        <p>“Instruye al niño en su camino, y aun cuando fuere viejo no se apartará de él.”<span class="verse-reference">Proverbios 22:6</span></p>
+      </div>
+    </section>
+    <section class="content-page container two-col">
+      <div>
+        <img src={aboutImage} alt="Campus Don Bosco" class="rounded-image" data-image-key="aboutImage" />
+      </div>
+      <div class="institution-copy">
+        <h2>Quiénes somos</h2>
+        <p>La Unidad Educativa Fiscomisional Don Bosco de Esmeraldas es una institución comprometida con la formación integral de niños y jóvenes, inspirada en el legado, los valores y el espíritu educativo de San Juan Bosco.</p>
+        <p>A través de una educación basada en el respeto, la responsabilidad, la solidaridad y la creatividad, buscamos formar estudiantes capaces de desarrollar sus talentos, enfrentar nuevos desafíos y contribuir de manera positiva a la sociedad.</p>
+      </div>
+    </section>
+    <section class="info-grid container">
+      <article><span>01</span><h2>Misión</h2><p>Formar estudiantes con conocimientos, valores y herramientas para participar activamente en la sociedad.</p></article>
+      <article><span>02</span><h2>Visión</h2><p>Ser una comunidad educativa que innova y acompaña a jóvenes capaces de construir un futuro mejor.</p></article>
+      <article><span>03</span><h2>Valores</h2><p>Respeto, responsabilidad, solidaridad, honestidad, alegría, servicio y excelencia.</p></article>
+    </section>
+  </main>
+  <Footer />
+</Layout>

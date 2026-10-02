@@ -1,0 +1,20 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { newsItems } from "../../data/siteContent";
+
+const news = newsItems;
+---
+<Layout title="Noticias | Don Bosco de Esmeraldas">
+  <Header />
+  <main>
+    <section class="page-hero"><div class="container"><p class="eyebrow">ACTUALIDAD</p><h1>Noticias y eventos</h1><p>“Proclamad entre las naciones su gloria, en todos los pueblos sus maravillas.”<span class="verse-reference">Salmo 96:3</span></p></div></section>
+    <section class="news-grid container">
+      {news.map(({ date, title, text, image }, index) => (
+        <article class="news-card" data-news-index={index}><img src={image} alt="" /><div><small>{date}</small><h2>{title}</h2><p>{text}</p><a href="/contacto/">Más información →</a></div></article>
+      ))}
+    </section>
+  </main>
+  <Footer />
+</Layout>

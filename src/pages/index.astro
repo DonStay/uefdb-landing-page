@@ -1,0 +1,43 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import QuickLinks from "../components/QuickLinks.astro";
+import NewsList from "../components/NewsList.astro";
+import Footer from "../components/Footer.astro";
+import { aboutImage } from "../data/siteContent";
+---
+<Layout title="Inicio | Don Bosco de Esmeraldas">
+  <Header />
+  <main>
+    <Hero />
+    <QuickLinks />
+
+    <section class="about container" id="sobre-nosotros">
+      <div class="about-image">
+        <img src={aboutImage} alt="Estudiantes de Don Bosco" data-image-key="aboutImage" />
+      </div>
+      <div class="about-copy">
+        <p class="eyebrow">SOBRE NOSOTROS</p>
+        <h2>Una educación con sentido y un futuro sin límites</h2>
+        <p>En la Unidad Educativa Fiscomisional Don Bosco de Esmeraldas creemos en el poder de la educación para transformar vidas. Nuestro compromiso es formar integralmente a cada estudiante, acompañándolo en su crecimiento académico, humano y espiritual.</p>
+        <a class="btn btn-primary" href="/institucion/">Conoce más sobre nosotros →</a>
+        <div class="values">
+          <span>♡ Valores</span><span>▣ Formación</span><span>♙ Compromiso</span><span>☆ Excelencia</span>
+        </div>
+      </div>
+      <aside class="latest-news">
+        <div class="section-title">
+          <p class="eyebrow">ÚLTIMAS NOTICIAS</p>
+          <a href="/noticias/">Ver todas →</a>
+        </div>
+        <NewsList />
+      </aside>
+    </section>
+
+    <section class="quote">
+      <p>“La verdad nos une, el cambio nos impulsa”</p>
+    </section>
+  </main>
+  <Footer />
+</Layout>

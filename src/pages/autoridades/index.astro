@@ -1,0 +1,23 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { teamMembers } from "../../data/siteContent";
+
+const people = teamMembers;
+---
+<Layout title="Autoridades | Don Bosco de Esmeraldas">
+  <Header />
+  <main>
+    <section class="page-hero"><div class="container"><p class="eyebrow">AUTORIDADES</p><h1>Nuestro equipo directivo</h1><p>“Con sabiduría se edificará la casa, y con prudencia se afirmará.”<span class="verse-reference">Proverbios 24:3</span></p></div></section>
+    <section class="cards-grid authority-grid container">
+      {people.map(({ role, name, image, description }, index) => (
+        <article class="person-card" data-person-index={index}>
+          <img src={image} alt={name} />
+          <div><span>{role}</span><h2>{name}</h2><p>{description}</p></div>
+        </article>
+      ))}
+    </section>
+  </main>
+  <Footer />
+</Layout>

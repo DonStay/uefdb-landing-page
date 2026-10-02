@@ -1,0 +1,36 @@
+---
+import { siteLogo } from "../data/siteContent";
+
+const navItems = [
+  { label: "Inicio", href: "/" },
+  { label: "Institución", href: "/institucion/" },
+  { label: "Autoridades", href: "/autoridades/" },
+  { label: "Oferta Educativa", href: "/oferta-educativa/" },
+  { label: "Cuadro de Honor", href: "/cuadro-de-honor/" },
+  { label: "Noticias", href: "/noticias/" },
+  { label: "Galería", href: "/galeria/" },
+  { label: "Contacto", href: "/contacto/" }
+];
+const current = Astro.url.pathname;
+---
+<header class="site-header">
+  <a class="brand" href="/" aria-label="Inicio">
+    <img src={siteLogo} alt="Logo Don Bosco" data-image-key="siteLogo" />
+    <span>
+      <small>UNIDAD EDUCATIVA</small>
+      <strong>FISCOMISIONAL</strong>
+      <b>DON BOSCO</b>
+      <em>DE ESMERALDAS</em>
+    </span>
+  </a>
+
+  <button class="menu-button" data-menu-button aria-label="Abrir menú" aria-expanded="false">☰</button>
+
+  <nav class="main-nav" data-menu>
+    {navItems.map((item) => (
+      <a class:list={{ active: current === item.href || (item.href !== "/" && current.startsWith(item.href)) }} href={item.href}>
+        {item.label}
+      </a>
+    ))}
+  </nav>
+</header>

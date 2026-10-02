@@ -1,0 +1,55 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { defaultSiteContent } from "../../data/siteContent";
+const honorBoards = defaultSiteContent.honorBoards;
+---
+<Layout title="Cuadro de Honor | Don Bosco de Esmeraldas">
+  <Header />
+  <main>
+    <section class="page-hero"><div class="container"><p class="eyebrow">CUADRO DE HONOR 2026 - 2027</p><h1>Reconocemos el esfuerzo</h1><p>“No nos cansemos de hacer el bien, porque a su debido tiempo cosecharemos si no nos damos por vencidos.”<span class="verse-reference">Gálatas 6:9</span></p></div></section>
+    <section class="honor-boards container">
+      {honorBoards.map(({ shift, groups }, boardIndex) => (
+        <section class="honor-board" aria-labelledby={`honor-board-${boardIndex}`}>
+          <header>
+            <p class="eyebrow">JORNADA {shift.toUpperCase()}</p>
+            <h2 id={`honor-board-${boardIndex}`}>Cuadro de honor</h2>
+          </header>
+          <div class="honor-groups">
+            {groups.map((group, groupIndex) => (
+              <article class="honor-group">
+                <h3>{group.role}</h3>
+                <div class="honor-pyramid">
+                  <div class="honor-student honor-leader" data-honor-board-index={boardIndex} data-honor-group-index={groupIndex} data-honor-role="principal">
+                    <div class="honor-photo-frame">
+                      <span>Foto del estudiante</span>
+                      <img class="honor-student-photo" alt="" hidden />
+                    </div>
+                    <span class="honor-role">{group.role}</span>
+                    <h4 class="honor-student-name">Nombre del estudiante</h4>
+                    <p class="honor-student-course">Curso / paralelo</p>
+                  </div>
+                  <div class="honor-escorts">
+                    {group.escorts.map((escort, escortIndex) => (
+                      <div class="honor-student" data-honor-board-index={boardIndex} data-honor-group-index={groupIndex} data-honor-role="escolta" data-honor-escort-index={escortIndex}>
+                        <div class="honor-photo-frame">
+                          <span>Foto del estudiante</span>
+                          <img class="honor-student-photo" alt="" hidden />
+                        </div>
+                        <span class="honor-role"> Escolta {escortIndex + 1}</span>
+                        <h4 class="honor-student-name">Nombre del estudiante</h4>
+                        <p class="honor-student-course">Curso / paralelo</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      ))}
+    </section>
+  </main>
+  <Footer />
+</Layout>

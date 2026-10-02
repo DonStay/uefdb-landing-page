@@ -1,0 +1,18 @@
+---
+import { newsItems } from "../data/siteContent";
+
+const news = newsItems;
+---
+<div class="news-list">
+  {news.map((item, index) => (
+    <a class="news-item" href="/noticias/" data-news-index={index}>
+      <img src={item.image} alt="" />
+      <div>
+        <small>{item.date}</small>
+        <h3>{item.title}</h3>
+        <p>{item.text}</p>
+      </div>
+      <span>→</span>
+    </a>
+  ))}
+</div>

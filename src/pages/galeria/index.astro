@@ -1,0 +1,62 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { galleryPhotos } from "../../data/siteContent";
+
+const photos = galleryPhotos;
+const video = photos.find((photo) => photo.videoUrl);
+const stillPhotos = photos.filter((photo) => !photo.videoUrl);
+---
+<Layout title="Galería | Don Bosco de Esmeraldas">
+  <Header />
+  <main>
+    <section class="page-hero"><div class="container"><p class="eyebrow">GALERÍA</p><h1>Así vivimos Don Bosco</h1></div></section>
+    <section class="gallery container">
+      {video && (
+        <article class="gallery-item gallery-video">
+          <iframe
+            title={video.title}
+            src={`https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(video.videoUrl)}&show_text=false&width=960`}
+            loading="lazy"
+            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </article>
+      )}
+      <div class="gallery-photos">
+        {stillPhotos.map((photo) => (
+          <button class="gallery-item" data-gallery-src={photo.src} data-gallery-title={photo.title}>
+            <img src={photo.src} alt={photo.title} />
+            <span>{photo.title}</span>
+          </button>
+        ))}
+      </div>
+    </section>
+  </main>
+  <div class="modal" data-gallery-modal aria-hidden="true">
+    <button class="modal-close" data-gallery-close>×</button>
+    <img data-gallery-image src="" alt="" />
+    <p data-gallery-title></p>
+  </div>
+  <Footer />
+  <script>
+    const modal = document.querySelector("[data-gallery-modal]");
+    const image = document.querySelector("[data-gallery-image]");
+    const title = modal?.querySelector("[data-gallery-title]");
+    document.querySelectorAll("[data-gallery-src]").forEach((button) => {
+      button.addEventListener("click", () => {
+        image.src = button.dataset.gallerySrc;
+        title.textContent = button.dataset.galleryTitle || "";
+        modal?.classList.add("is-open");
+        modal?.setAttribute("aria-hidden", "false");
+      });
+    });
+    const close = () => {
+      modal?.classList.remove("is-open");
+      modal?.setAttribute("aria-hidden", "true");
+    };
+    document.querySelector("[data-gallery-close]")?.addEventListener("click", close);
+    modal?.addEventListener("click", (e) => { if (e.target === modal) close(); });
+  </script>
+</Layout>

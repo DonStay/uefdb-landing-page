@@ -1,0 +1,55 @@
+---
+import { heroSlides } from "../data/siteContent";
+
+const slides = heroSlides;
+---
+<section class="hero" data-carousel>
+  {slides.map((slide, i) => (
+    <article class:list={{ "hero-slide": true, active: i === 0 }} data-hero-index={i}>
+      <img src={slide.image} alt="" class="hero-bg" />
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <p class="eyebrow">{slide.eyebrow}</p>
+        <h1>{slide.title}</h1>
+        <p class="hero-text">{slide.text}</p>
+      </div>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="/institucion/">Conoce nuestra institución →</a>
+        <button class="btn btn-light" data-scroll="#sobre-nosotros">◉ &nbsp; Ver más</button>
+      </div>
+    </article>
+  ))}
+  <div class="carousel-controls">
+    <button data-prev aria-label="Anterior">‹</button>
+    <div class="dots" data-dots>
+      {slides.map((_, i) => <button class:list={{ active: i === 0 }} data-dot={i} aria-label={`Ir a la diapositiva ${i + 1}`}></button>)}
+    </div>
+    <button data-next aria-label="Siguiente">›</button>
+  </div>
+</section>
+
+<script>
+  const root = document.querySelector("[data-carousel]");
+  if (root) {
+    const slides = [...root.querySelectorAll(".hero-slide")];
+    const dots = [...root.querySelectorAll("[data-dot]")];
+    let index = 0;
+    let timer;
+
+    const show = (next) => {
+      index = (next + slides.length) % slides.length;
+      slides.forEach((s, i) => s.classList.toggle("active", i === index));
+      dots.forEach((d, i) => d.classList.toggle("active", i === index));
+    };
+
+    const restart = () => {
+      clearInterval(timer);
+      timer = setInterval(() => show(index + 1), 6000);
+    };
+
+    root.querySelector("[data-prev]")?.addEventListener("click", () => { show(index - 1); restart(); });
+    root.querySelector("[data-next]")?.addEventListener("click", () => { show(index + 1); restart(); });
+    dots.forEach((d) => d.addEventListener("click", () => { show(Number(d.dataset.dot)); restart(); }));
+    restart();
+  }
+</script>

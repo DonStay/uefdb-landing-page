@@ -1,0 +1,20 @@
+---
+const links = [
+  ["♙", "Autoridades", "Conoce nuestro equipo directivo", "/autoridades/"],
+  ["⌂", "Institución", "Nuestra historia y valores", "/institucion/"],
+  ["◇", "Oferta Educativa", "Inicial - Básica - Bachillerato", "/oferta-educativa/"],
+  ["☆", "Cuadro de Honor", "Nuestros mejores estudiantes", "/cuadro-de-honor/"],
+  ["▤", "Noticias", "Eventos y actualizaciones", "/noticias/"],
+  ["▧", "Galería", "Momentos que nos inspiran", "/galeria/"]
+];
+---
+<section class="quick-links container">
+  {links.map(([icon, title, text, href]) => (
+    <a href={href} class="quick-card">
+      <span class="quick-icon">{icon}</span>
+      <h3>{title}</h3>
+      <p>{text}</p>
+      <b>→</b>
+    </a>
+  ))}
+</section>

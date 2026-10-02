@@ -1,0 +1,153 @@
+---
+import "../styles/global.css";
+import { defaultSiteContent } from "../data/siteContent";
+
+const { title = "Unidad Educativa Fiscomisional Don Bosco de Esmeraldas", description = "Educación con valores, conocimiento y compromiso." } = Astro.props;
+const defaultContent = JSON.stringify(defaultSiteContent);
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=Sacramento&display=swap" rel="stylesheet" />
+    <link rel="icon" href={defaultSiteContent.siteLogo} />
+  </head>
+  <body>
+    <slot />
+    <script is:inline data-default-content={defaultContent}>
+      (() => {
+        const storageKey = "don-bosco-content-v1";
+        const defaults = JSON.parse(document.currentScript.dataset.defaultContent || "{}");
+
+        const getContent = () => {
+          try {
+            const raw = localStorage.getItem(storageKey);
+            return raw ? { ...defaults, ...JSON.parse(raw) } : defaults;
+          } catch {
+            return defaults;
+          }
+        };
+
+        const applyText = (selector, value) => {
+          const el = document.querySelector(selector);
+          if (el && value) el.textContent = value;
+        };
+
+        const content = getContent();
+
+        document.querySelectorAll("[data-image-key]").forEach((element) => {
+          const keyPath = element.getAttribute("data-image-key");
+          if (!keyPath) return;
+          const value = keyPath.split(".").reduce((obj, key) => obj?.[key], content);
+          if (value && element.tagName === "IMG") {
+            const imagePath = /^(https?:)?\/\//i.test(value) || value.startsWith("/") ? value : `/images/${value}`;
+            const fallbackValue = keyPath.split(".").reduce((obj, key) => obj?.[key], defaults);
+            if (fallbackValue && imagePath !== fallbackValue) {
+              element.addEventListener("error", () => {
+                element.src = fallbackValue;
+              }, { once: true });
+            }
+            element.src = imagePath;
+            element.closest(".program-image-slot")?.classList.add("has-image");
+          }
+        });
+
+        document.querySelectorAll("[data-hero-index]").forEach((article) => {
+          const index = Number(article.getAttribute("data-hero-index"));
+          const slide = content.heroSlides?.[index];
+          if (!slide) return;
+          const img = article.querySelector(".hero-bg");
+          const eyebrow = article.querySelector(".eyebrow");
+          const title = article.querySelector("h1");
+          const text = article.querySelector(".hero-text");
+
+          if (img && slide.image) img.src = slide.image;
+          if (eyebrow && slide.eyebrow) eyebrow.textContent = slide.eyebrow;
+          if (title && slide.title) title.textContent = slide.title;
+          if (text && slide.text) text.textContent = slide.text;
+        });
+
+        document.querySelectorAll("[data-news-index]").forEach((card) => {
+          const index = Number(card.getAttribute("data-news-index"));
+          const item = content.newsItems?.[index];
+          if (!item) return;
+          const img = card.querySelector("img");
+          const date = card.querySelector("small");
+          const title = card.querySelector("h3, h2");
+          const text = card.querySelector("p");
+
+          if (img && item.image) img.src = item.image;
+          if (date && item.date) date.textContent = item.date;
+          if (title && item.title) title.textContent = item.title;
+          if (text && item.text) text.textContent = item.text;
+        });
+
+        document.querySelectorAll("[data-person-index]").forEach((card) => {
+          const index = Number(card.getAttribute("data-person-index"));
+          const person = content.teamMembers?.[index];
+          if (!person) return;
+          const img = card.querySelector("img");
+          const role = card.querySelector("span");
+          const name = card.querySelector("h2");
+          const desc = card.querySelector("p");
+
+          if (img && person.image) img.src = person.image;
+          if (role && person.role) role.textContent = person.role;
+          if (name && person.name) name.textContent = person.name;
+          if (desc && person.description) desc.textContent = person.description;
+        });
+
+        document.querySelectorAll("[data-honor-board-index]").forEach((card) => {
+          const boardIndex = Number(card.getAttribute("data-honor-board-index"));
+          const groupIndex = Number(card.getAttribute("data-honor-group-index"));
+          const group = content.honorBoards?.[boardIndex]?.groups?.[groupIndex];
+          if (!group) return;
+          const role = card.getAttribute("data-honor-role");
+          const escortIndex = Number(card.getAttribute("data-honor-escort-index"));
+          const student = role === "principal" ? group.student || group.abanderado : group.escorts?.[escortIndex];
+          if (!student) return;
+          const photo = card.querySelector(".honor-student-photo");
+          const name = card.querySelector(".honor-student-name");
+          const course = card.querySelector(".honor-student-course");
+
+          if (photo && student.image) {
+            photo.alt = student.name || "Foto del estudiante";
+            photo.hidden = false;
+            const photoFrame = photo.parentElement;
+            photo.addEventListener("load", () => photoFrame?.classList.add("has-photo"), { once: true });
+            photo.addEventListener("error", () => {
+              photo.hidden = true;
+              photoFrame?.classList.remove("has-photo");
+            }, { once: true });
+            photo.src = student.image;
+            if (photo.complete && photo.naturalWidth > 0) {
+              photoFrame?.classList.add("has-photo");
+            }
+          }
+          if (name) name.textContent = student.name || "Nombre del estudiante";
+          if (course) course.textContent = student.course || "Curso / paralelo";
+        });
+
+        const menuButton = document.querySelector("[data-menu-button]");
+        const menu = document.querySelector("[data-menu]");
+
+        menuButton?.addEventListener("click", () => {
+          menu?.classList.toggle("is-open");
+          menuButton?.setAttribute("aria-expanded", String(menu?.classList.contains("is-open")));
+        });
+
+        document.querySelectorAll("[data-scroll]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const target = document.querySelector(button.getAttribute("data-scroll"));
+            target?.scrollIntoView({ behavior: "smooth" });
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,44 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+const levels = [
+  ["Educación Inicial", "Acompañamiento y aprendizaje mediante experiencias significativas.", "01"],
+  ["Educación General Básica", "Desarrollo de conocimientos, habilidades y valores para cada etapa.", "02"],
+  ["Bachillerato", "Preparación académica y humana para estudios superiores y el mundo laboral.", "03"],
+  ["Bachillerato Técnico", "Formación técnica orientada a proyectos, tecnología y emprendimiento.", "04"]
+];
+---
+<Layout title="Oferta Educativa | Don Bosco de Esmeraldas">
+  <Header />
+  <main>
+    <section class="page-hero"><div class="container"><p class="eyebrow">OFERTA EDUCATIVA</p><h1>Aprender para transformar</h1><p>“Todo lo que hagan, háganlo de corazón, como para el Señor.”<span class="verse-reference">Colosenses 3:23</span></p></div></section>
+    <section class="cards-grid program-grid container">
+      {levels.map(([title, text, number], index) => (
+        <article class="program-card">
+          <div class={index === 3 ? "program-image-slot program-video-slot" : "program-image-slot"}>
+            {index === 3 ? (
+              <iframe
+                title="Video de Bachillerato Técnico"
+                src={`https://www.facebook.com/plugins/video.php?href=${encodeURIComponent("https://www.facebook.com/reel/872740409043042/")}&show_text=false&width=960`}
+                loading="lazy"
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                allowfullscreen
+              ></iframe>
+            ) : (
+              <>
+                <span>Espacio para imagen de {title}</span>
+                <img data-image-key={`programImages.${index}`} alt={`Imagen de ${title}`} />
+              </>
+            )}
+          </div>
+          <span class="program-number">{number}</span>
+          <h2>{title}</h2>
+          <p>{text}</p>
+          <a href="/contacto/">Solicitar información →</a>
+        </article>
+      ))}
+    </section>
+  </main>
+  <Footer />
+</Layout>

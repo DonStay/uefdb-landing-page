@@ -1,0 +1,295 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { defaultSiteContent, getStoredSiteContent, saveSiteContent } from "../data/siteContent";
+const content = getStoredSiteContent();
+---
+<Layout title="Panel de administración | Don Bosco de Esmeraldas">
+  <Header />
+  <main class="container content-page admin-page">
+    <div class="admin-header">
+      <p class="eyebrow">ADMINISTRACIÓN</p>
+      <h1>Editar contenido de la web</h1>
+      <p>Cambia textos e imágenes desde esta pantalla y se guardarán en el navegador.</p>
+    </div>
+
+    <form class="admin-form" id="admin-form">
+      <section>
+        <h2>Logo</h2>
+        <label>
+          URL del logo
+          <input name="siteLogo" value={content.siteLogo} />
+        </label>
+      </section>
+
+      <section>
+        <h2>Imagen principal</h2>
+        <label>
+          URL de la imagen
+          <input name="aboutImage" value={content.aboutImage} />
+        </label>
+      </section>
+
+      <section>
+        <h2>Hero</h2>
+        {content.heroSlides.map((slide, index) => (
+          <div class="admin-card">
+            <label>
+              Imagen
+              <input name={`heroSlides.${index}.image`} value={slide.image} />
+            </label>
+            <label>
+              Eyebrow
+              <input name={`heroSlides.${index}.eyebrow`} value={slide.eyebrow} />
+            </label>
+            <label>
+              Título
+              <input name={`heroSlides.${index}.title`} value={slide.title} />
+            </label>
+            <label>
+              Texto
+              <textarea name={`heroSlides.${index}.text`}>{slide.text}</textarea>
+            </label>
+          </div>
+        ))}
+      </section>
+
+      <section>
+        <h2>Noticias</h2>
+        {content.newsItems.map((item, index) => (
+          <div class="admin-card">
+            <label>
+              Imagen
+              <input name={`newsItems.${index}.image`} value={item.image} />
+            </label>
+            <label>
+              Fecha
+              <input name={`newsItems.${index}.date`} value={item.date} />
+            </label>
+            <label>
+              Título
+              <input name={`newsItems.${index}.title`} value={item.title} />
+            </label>
+            <label>
+              Texto
+              <textarea name={`newsItems.${index}.text`}>{item.text}</textarea>
+            </label>
+          </div>
+        ))}
+      </section>
+
+      <section>
+        <h2>Autoridades</h2>
+        {content.teamMembers.map((person, index) => (
+          <div class="admin-card">
+            <label>
+              Imagen
+              <input name={`teamMembers.${index}.image`} value={person.image} />
+            </label>
+            <label>
+              Rol
+              <input name={`teamMembers.${index}.role`} value={person.role} />
+            </label>
+            <label>
+              Nombre
+              <input name={`teamMembers.${index}.name`} value={person.name} />
+            </label>
+            <label>
+              Descripción
+              <textarea name={`teamMembers.${index}.description`}>{person.description}</textarea>
+            </label>
+          </div>
+        ))}
+      </section>
+
+      <section>
+        <h2>Oferta educativa</h2>
+        {[
+          "Educación Inicial",
+          "Educación General Básica",
+          "Bachillerato"
+        ].map((level, index) => (
+          <label>
+            Imagen para {level}
+            <input name={`programImages.${index}`} value={content.programImages[index]} placeholder="/images/nombre-de-imagen.jpg" />
+          </label>
+        ))}
+      </section>
+
+      <section>
+        <h2>Cuadros de honor</h2>
+        {content.honorBoards.map((board, boardIndex) => (
+          <div class="admin-card">
+            <h3>Jornada {board.shift}</h3>
+            {board.groups.map((group, groupIndex) => (
+              <div class="admin-card">
+                <h4>{group.role} y sus escoltas</h4>
+                <label>
+                  Nombre del estudiante
+                  <input name={`honorBoards.${boardIndex}.groups.${groupIndex}.student.name`} value={group.student.name} placeholder="Nombre del estudiante" />
+                </label>
+                <label>
+                  Curso / paralelo
+                  <input name={`honorBoards.${boardIndex}.groups.${groupIndex}.student.course`} value={group.student.course} placeholder="Curso / paralelo" />
+                </label>
+                <label>
+                  Imagen del estudiante (ruta o URL)
+                  <input name={`honorBoards.${boardIndex}.groups.${groupIndex}.student.image`} value={group.student.image} placeholder="/images/estudiante.jpg" />
+                </label>
+                {group.escorts.map((escort, escortIndex) => (
+                  <div>
+                    <h4>Escolta {escortIndex + 1}</h4>
+                    <label>
+                      Nombre del estudiante
+                      <input name={`honorBoards.${boardIndex}.groups.${groupIndex}.escorts.${escortIndex}.name`} value={escort.name} placeholder="Nombre del estudiante" />
+                    </label>
+                    <label>
+                      Curso / paralelo
+                      <input name={`honorBoards.${boardIndex}.groups.${groupIndex}.escorts.${escortIndex}.course`} value={escort.course} placeholder="Curso / paralelo" />
+                    </label>
+                    <label>
+                      Imagen del estudiante (ruta o URL)
+                      <input name={`honorBoards.${boardIndex}.groups.${groupIndex}.escorts.${escortIndex}.image`} value={escort.image} placeholder="/images/estudiante.jpg" />
+                    </label>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        ))}
+      </section>
+
+      <button class="btn btn-primary" type="submit">Guardar cambios</button>
+      <button class="btn btn-light" type="button" id="reset-admin">Restaurar valores por defecto</button>
+    </form>
+  </main>
+  <Footer />
+
+  <script>
+    const form = document.querySelector("#admin-form");
+    const defaultContent = JSON.parse(sessionStorage.getItem("don-bosco-default-content") || '{}');
+    sessionStorage.setItem("don-bosco-default-content", JSON.stringify({
+      siteLogo: "",
+      aboutImage: "",
+      programImages: [],
+      heroSlides: [],
+      newsItems: [],
+      teamMembers: [],
+      honorBoards: []
+    }));
+
+    form?.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const formData = new FormData(form);
+      const values = Object.fromEntries(formData.entries());
+      const payload = {
+        siteLogo: values.siteLogo,
+        aboutImage: values.aboutImage,
+        programImages: [0, 1, 2].map((index) => values[`programImages.${index}`]),
+        heroSlides: [
+          {
+            image: values["heroSlides.0.image"],
+            eyebrow: values["heroSlides.0.eyebrow"],
+            title: values["heroSlides.0.title"],
+            text: values["heroSlides.0.text"]
+          },
+          {
+            image: values["heroSlides.1.image"],
+            eyebrow: values["heroSlides.1.eyebrow"],
+            title: values["heroSlides.1.title"],
+            text: values["heroSlides.1.text"]
+          },
+          {
+            image: values["heroSlides.2.image"],
+            eyebrow: values["heroSlides.2.eyebrow"],
+            title: values["heroSlides.2.title"],
+            text: values["heroSlides.2.text"]
+          }
+        ],
+        newsItems: [
+          {
+            date: values["newsItems.0.date"],
+            title: values["newsItems.0.title"],
+            text: values["newsItems.0.text"],
+            image: values["newsItems.0.image"]
+          },
+          {
+            date: values["newsItems.1.date"],
+            title: values["newsItems.1.title"],
+            text: values["newsItems.1.text"],
+            image: values["newsItems.1.image"]
+          },
+          {
+            date: values["newsItems.2.date"],
+            title: values["newsItems.2.title"],
+            text: values["newsItems.2.text"],
+            image: values["newsItems.2.image"]
+          },
+          {
+            date: values["newsItems.3.date"],
+            title: values["newsItems.3.title"],
+            text: values["newsItems.3.text"],
+            image: values["newsItems.3.image"]
+          }
+        ],
+        teamMembers: [
+          {
+            role: values["teamMembers.0.role"],
+            name: values["teamMembers.0.name"],
+            description: values["teamMembers.0.description"],
+            image: values["teamMembers.0.image"]
+          },
+          {
+            role: values["teamMembers.1.role"],
+            name: values["teamMembers.1.name"],
+            description: values["teamMembers.1.description"],
+            image: values["teamMembers.1.image"]
+          },
+          {
+            role: values["teamMembers.2.role"],
+            name: values["teamMembers.2.name"],
+            description: values["teamMembers.2.description"],
+            image: values["teamMembers.2.image"]
+          },
+          {
+            role: values["teamMembers.3.role"],
+            name: values["teamMembers.3.name"],
+            description: values["teamMembers.3.description"],
+            image: values["teamMembers.3.image"]
+          }
+        ],
+        honorBoards: [0, 1].map((boardIndex) => ({
+          shift: boardIndex === 0 ? "Matutina" : "Vespertina",
+          groups: [0, 1, 2].map((groupIndex) => ({
+            role: groupIndex === 0 ? "Abanderado/a" : `Portaestandarte ${groupIndex}`,
+            student: {
+              name: values[`honorBoards.${boardIndex}.groups.${groupIndex}.student.name`],
+              course: values[`honorBoards.${boardIndex}.groups.${groupIndex}.student.course`],
+              image: values[`honorBoards.${boardIndex}.groups.${groupIndex}.student.image`]
+            },
+            escorts: [0, 1].map((escortIndex) => ({
+              name: values[`honorBoards.${boardIndex}.groups.${groupIndex}.escorts.${escortIndex}.name`],
+              course: values[`honorBoards.${boardIndex}.groups.${groupIndex}.escorts.${escortIndex}.course`],
+              image: values[`honorBoards.${boardIndex}.groups.${groupIndex}.escorts.${escortIndex}.image`]
+            }))
+          }))
+        })),
+        galleryPhotos: [
+          { src: values["galleryPhotos.0.src"], title: values["galleryPhotos.0.title"] },
+          { src: values["galleryPhotos.1.src"], title: values["galleryPhotos.1.title"] },
+          { src: values["galleryPhotos.2.src"], title: values["galleryPhotos.2.title"] },
+          { src: values["galleryPhotos.3.src"], title: values["galleryPhotos.3.title"] }
+        ]
+      };
+
+      localStorage.setItem("don-bosco-content-v1", JSON.stringify(payload));
+      alert("Cambios guardados localmente.");
+    });
+
+    document.querySelector("#reset-admin")?.addEventListener("click", () => {
+      localStorage.removeItem("don-bosco-content-v1");
+      window.location.reload();
+    });
+  </script>
+</Layout>
